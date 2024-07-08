@@ -78,6 +78,6 @@ export async function fetchCartCheckout(cart) {
     if(!response.ok) throw new Error((await response.json()).message);
     else {
         alert((await response.json()).message);
-        localStorage.setItem(cart.reduce((credit, product) => credit - product.buyQuantity * product.price, localStorage.getItem('credit')));
+        localStorage.setItem('credit', cart.reduce((credit, product) => credit - product.buyQuantity * parseFloat(product.price, 10).toFixed(2) * 100, localStorage.getItem('credit')));
     }
 }
