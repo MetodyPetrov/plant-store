@@ -1,0 +1,22 @@
+[{
+  "_id": {
+    "$oid": "667733f21d4ae13ec00cde04"
+  },
+  "name": "Escallonia 'Gold Ellen'",
+  "price": "37.01 lv.",
+  "quantity": "16",
+  "type": "Hebe Schrub",
+  "url": "https://www.gardeningexpress.co.uk/media/catalog/product/cache/fa4e57de89a0fb1427d2c82c53fb200f/v/i/visi42168.webp",
+  "description": "A compact, evergreen shrub to about 2m with small, shiny, yellow leaves with an irregular dark green splash in the centre. Clusters of small, dark pink flowers are produced in late summer"
+},
+{
+  "_id": {
+    "$oid": "667e9f62c22a2de620e558a3"
+  },
+  "name": "Evergreen Hebe 'Celina' Plant",
+  "price": "29.97 lv.",
+  "quantity": "5",
+  "type": "Hebe Schrub",
+  "url": "https://www.gardeningexpress.co.uk/media/catalog/product/cache/fa4e57de89a0fb1427d2c82c53fb200f/h/e/hebe-celina-flowering-plant750x750.webp",
+  "description": "A dwarf evergreen shrub to around 30cm high, with dark red-brown stems and narrow, glossy green leaves that are slightly toothed towards the tips. Palest lilac to near-white flowers are produced in clusters at the tips of the stems in late spring"
+}]
