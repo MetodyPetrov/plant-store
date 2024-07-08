@@ -3,8 +3,8 @@ const { MongoClient } = require('mongodb');
 
 const { SECRET } = require('./config');
 
-const uri = 'mongodb://localhost:27017';
-const client = new MongoClient(uri, { replicaSet: rs }); // https://stackoverflow.com/questions/51461952/mongodb-v4-0-transaction-mongoerror-transaction-numbers-are-only-allowed-on-a
+const uri = 'mongodb://localhost:27017?replicaSet=rs0';
+const client = new MongoClient(uri);
 
 async function getCollection(type) {
     try {
