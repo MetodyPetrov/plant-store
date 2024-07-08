@@ -92,4 +92,7 @@ e.g. "mongosh mongodb://localhost:27017/Store"
 "npm start"
 
 
-20) The project should be now successfully setup and found running on the port that's displayed after doing the last step
+20) The project should be now successfully setup and found running on the port that's displayed after doing the last step; 
+
+
+To login as an admin: username: 'Metodi', password: 'm'
