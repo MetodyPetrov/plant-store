@@ -283,7 +283,7 @@ footer {
     width: 50%;
 }
 .highlighted {
-    color: blue;
+    color: lightblue;
 }
 .offers-container-wrapper {
     display: flex;
