@@ -91,7 +91,8 @@ footer {
     display: flex;
     justify-content: space-evenly;
 
-    left: calc(25% - 50px);
+    left: calc(25vw - 50px);
+    /* left: calc((25% - 50px) + (100vw - 100%)); */
     width: 50%;
     z-index: 1;
 
