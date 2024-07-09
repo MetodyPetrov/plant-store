@@ -38,7 +38,7 @@ export default function Offer({ offer, searchQuery }) {
                 i += searchQuery.length - 1;
                 newTranscript.push(<span className="highlighted" key={i}>{part}</span>);
             }
-            else newTranscript.push((isnumber ? offer.price[i] : offer.name[i]));
+            else newTranscript.push((isnumber ? offer.price[i] : offer.name[i])); // TODO: outsource this into a function and maybe think about how to sort by type
         }
         isnumber ? setOfferPrice(newTranscript) : setOfferTitle(newTranscript);
     }, [searchQuery, offer.name, offer.price]);
