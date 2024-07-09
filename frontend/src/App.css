@@ -170,10 +170,11 @@ footer {
     flex-direction: column;
     align-items: center;
     width: fit-content;
-    background-image: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0), var(--about-bushes-bg));
-    padding: 15px;
-    border-radius: 30px;
-    border: solid var(--nav-bar-bg) 1px;
+    height: 408px;
+    background-image: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0), var(--about-bushes-bg)); 
+    padding: 15px; 
+    border-radius: 30px; 
+    border: solid var(--nav-bar-bg) 1px; 
 }
 .add-offer {
     background-image: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0), var(--add-offer-bg-img));
@@ -265,6 +266,23 @@ footer {
 
 .storepage-bg {
     background-color: var(--storepage-bg);
+}
+.search-bar-wrapper {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+.search-bar {
+    outline: none;
+    font-size: 35px;
+    padding: 25px;
+    border-radius: 10px;
+    border: none;
+    width: 50%;
+}
+.highlighted {
+    color: blue;
 }
 .offers-container-wrapper {
     display: flex;
