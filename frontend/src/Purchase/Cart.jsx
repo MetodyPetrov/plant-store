@@ -8,18 +8,19 @@ import { fetchCartCheckout } from "../utils/http";
 
 export default function CartPage() {
     const { changeNavBar, checkNavBarPageExist } = useOutletContext();
-    const { cart } = useContext(CartContext);
+    const { cart, clearCart } = useContext(CartContext);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(!checkNavBarPageExist(<CartIcon />)) navigate('/home');
+        if(!checkNavBarPageExist(<CartIcon />)) navigate('/account');
     }, [checkNavBarPageExist, navigate]);
     useEffect(() => {
         if(!cart?.length) changeNavBar({ mode: 'DELETE', key: <CartIcon className="cart-icon" /> });
     }, [cart, changeNavBar]);
 
     async function handleCheckout() {
-        await fetchCartCheckout(cart);
+        if(!localStorage.getItem('accessToken')) navigate('/authenticate');
+        if(await fetchCartCheckout(cart)) clearCart();
     }
 
     return (
