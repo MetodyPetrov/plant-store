@@ -6,12 +6,20 @@ export default function AdminOptions({ offerId, unmount, pos, refetchOffers }) {
     const [ isVisible, setIsVisible ] = useState(false);
 
     useEffect(() => {
-        const handleClick = (event) => !optionsRef.current?.contains(event.target) && pos.target !== event.target && unmount();
+        const handleClick = async (event) => {
+            const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+            if(!optionsRef.current?.contains(event.target) && pos.target !== event.target) {
+                setIsVisible(false);
+                await delay(200);
+                unmount();
+            }
+        }
+
         document.addEventListener('mousedown', handleClick);
         setIsVisible(true);
-        return () => {
-            document.removeEventListener('mousedown', handleClick);
-        };
+
+        return () => document.removeEventListener('mousedown', handleClick);
     }, [unmount, pos.target]);
 
     async function changeQuantity(mode) {
