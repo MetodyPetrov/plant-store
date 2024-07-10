@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import Quantity from "../childComponents/Quantity";
 import OfferDescription from "../childComponents/OfferDescription";
 
-export default function AddOffer() {
+export default function AddOffer({ displayType = false }) {
     const inputQuantity = useRef(null);
     const [ viewDescription, setViewDescription ] = useState(false);
 
@@ -17,6 +17,7 @@ export default function AddOffer() {
 
             { viewDescription && <OfferDescription pos={viewDescription} unmount={() => setViewDescription(false)} classes="add-offer-description">Set Description</OfferDescription>}
             <div className="flex-filler"></div>
+            { displayType && <p className="offer-type">Type: Set Type</p> }
             <div className="offer-info">
                 <h2 className="offer-price">0.00 lv</h2>
                 <Quantity quantity='0' inpRef={inputQuantity}/>
