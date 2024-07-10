@@ -171,7 +171,7 @@ footer {
     flex-direction: column;
     align-items: center;
     width: fit-content;
-    height: 408px;
+    /* height: 408px; */
     background-image: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0), var(--about-bushes-bg)); 
     padding: 15px; 
     border-radius: 30px; 
@@ -207,6 +207,9 @@ footer {
 }
 .flex-filler {
     flex-grow: 1;
+}
+.offer-type {
+    color: white;
 }
 .offer-info {
     margin-top: 30px;
@@ -262,13 +265,39 @@ footer {
     border: none;
 }
 
-
+.admin-plus-button {
+    width: 35px;
+    height: 35px;
+    background-color: lightgreen;
+    border-right: none;
+    transition: 0.2s;
+}
+.admin-plus-button:hover {
+    background-color: green;
+}
+.admin-minus-button {
+    width: 35px;
+    height: 35px;
+    background-color: lightcoral;
+    transition: 0.2s;
+}
+.admin-minus-button:hover {
+    background-color: red;
+}
+.opacity-appearance {
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
+}
+.opacity-appearance.visible {
+    opacity: 1;
+}
 
 
 .storepage-bg {
     background-color: var(--storepage-bg);
 }
 .search-bar-wrapper {
+    position: relative;
     width: 100vw;
     display: flex;
     justify-content: center;
@@ -278,9 +307,24 @@ footer {
     outline: none;
     font-size: 35px;
     padding: 25px;
-    border-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
     border: none;
     width: 50%;
+}
+.type-search {
+    position: absolute;
+    height: 100%;
+    right: 25%;
+    transform: translate(+100%);
+    font-size: 25px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: bisque;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 .highlighted {
     color: lightblue;
@@ -439,7 +483,7 @@ footer {
 }
 .add-credit-form > input {
     border-left: solid red 1px;
-    width: 145px;
+    width: 300px;
 }
 .add-credit-form > input:hover,
 .add-credit-form > input:focus {
