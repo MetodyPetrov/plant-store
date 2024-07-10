@@ -1,11 +1,40 @@
 export async function fetchOffers({ signal }) {
-    const response = await fetch('http://localhost:3000/offers', { signal: signal });
+    const response = await fetch('http://localhost:3000/offers', { 
+        signal: signal,
+        headers: {
+            'X-Authorization': localStorage.getItem('accessToken')
+        }
+    });
     
-    if(!response.ok) {
-        if(!response.ok) throw new Error((await response.json()).message);
-    } else {
-        return response.json();
-    }
+    if(!response.ok) throw new Error((await response.json()).message);
+    else return response.json();
+}
+
+export async function fetchOfferQuantityIncrease(offerId, quantity = 1) {
+    const response = await fetch(`http://localhost:3000/admin/offers/${offerId}/increase-quantity`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Authorization': localStorage.getItem('accessToken')
+        },
+        body: JSON.stringify({ quantity })
+    });
+
+    if(!response.ok) alert('Unsuccessful increase.');
+    else return true;
+}
+export async function fetchOfferQuantityDecrease(offerId, quantity = 1) {
+    const response = await fetch(`http://localhost:3000/admin/offers/${offerId}/decrease-quantity`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Authorization': localStorage.getItem('accessToken')
+        },
+        body: JSON.stringify({ quantity })
+    });
+
+    if(!response.ok) alert('Unsuccessful decrease.');
+    else return true;
 }
 
 export async function fetchAuth(username, password, method) {
@@ -33,19 +62,6 @@ export async function fetchAuth(username, password, method) {
     }
 }
 
-// export async function fetchCredit() {
-//     const response = await fetch('http://localhost:3000/accounts/credit', {
-//         headers: {
-//             'X-Authorization': localStorage.getItem('accessToken')
-//         }
-//     });
-
-//     if(!response.ok) throw new Error((await response.json()).message);
-//     else {
-//         localStorage.setItem('credit', await response.json());
-//     }
-// }
-
 export async function fetchGenerateCredit(credit) {
     const response = await fetch('http://localhost:3000/admin/credit', {
         method: 'PUT',
@@ -64,6 +80,7 @@ export async function fetchGenerateCredit(credit) {
 }
 
 export async function fetchCartCheckout(cart) {
+    if(!localStorage.getItem('accessToken')) return;
     const request = cart.map(prod => ({ id: prod._id, amount: prod.buyQuantity }));
 
     const response = await fetch('http://localhost:3000/purchase/buy', {
@@ -74,10 +91,8 @@ export async function fetchCartCheckout(cart) {
         },
         body: JSON.stringify(request)
     });
-
-    if(!response.ok) throw new Error((await response.json()).message);
-    else {
-        alert((await response.json()).message);
-        localStorage.setItem('credit', cart.reduce((credit, product) => credit - product.buyQuantity * parseFloat(product.price, 10).toFixed(2) * 100, localStorage.getItem('credit')));
-    }
+    alert((await response.json()).message);
+    if(response.ok) localStorage.setItem('credit', cart.reduce((credit, product) => credit - product.buyQuantity * parseFloat(product.price, 10).toFixed(2) * 100, localStorage.getItem('credit')));
+    else return false;
+    return true;
 }
