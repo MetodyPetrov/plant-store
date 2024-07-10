@@ -20,7 +20,7 @@ export default function Account() {
     async function handleAddCredit(event) {
         event.preventDefault();
         const fd = new FormData(event.target);
-        await fetchGenerateCredit(fd.get('credit'));
+        await fetchGenerateCredit(fd.get('credit') * 100);
         setCredit(localStorage.getItem('credit'));
     }
 
@@ -30,13 +30,13 @@ export default function Account() {
             <div className="account-page">
                 <button className="logout-button" onClick={handleLogout}>Logout</button>
                 <br/>
-                <h1>CREDIT: {credit} leva</h1>
+                <h1>CREDIT: {parseFloat(credit / 100).toFixed(2)} leva</h1>
                 <br/>
                 { localStorage.getItem('client') === 'admin' && 
                     <>
                         <form onSubmit={handleAddCredit} className="add-credit-form">
                             <button>Add credit</button>
-                            <input defaultValue={2000} name="credit" required></input>
+                            <input defaultValue={parseFloat(2000 / 100).toFixed(2)} name="credit" required></input>
                         </form>
                         <br/>
                     </>
