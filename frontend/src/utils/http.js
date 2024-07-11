@@ -10,8 +10,8 @@ export async function fetchOffers({ signal }) {
     else return response.json();
 }
 
-export async function fetchOfferQuantityIncrease(offerId, quantity = 1) {
-    const response = await fetch(`http://localhost:3000/admin/offers/${offerId}/increase-quantity`, {
+export async function fetchOfferQuantityChange(offerId, quantity = 1, mode) {
+    const response = await fetch(`http://localhost:3000/admin/offers/${offerId}/${mode}-quantity`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -20,20 +20,7 @@ export async function fetchOfferQuantityIncrease(offerId, quantity = 1) {
         body: JSON.stringify({ quantity })
     });
 
-    if(!response.ok) alert('Unsuccessful increase.');
-    else return true;
-}
-export async function fetchOfferQuantityDecrease(offerId, quantity = 1) {
-    const response = await fetch(`http://localhost:3000/admin/offers/${offerId}/decrease-quantity`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-Authorization': localStorage.getItem('accessToken')
-        },
-        body: JSON.stringify({ quantity })
-    });
-
-    if(!response.ok) alert('Unsuccessful decrease.');
+    if(!response.ok) alert(`Unsuccessful ${mode}.`);
     else return true;
 }
 
@@ -76,6 +63,19 @@ export async function fetchGenerateCredit(credit) {
     else {
         alert((await response.json()).message);
         localStorage.setItem('credit', credit * 1 + localStorage.getItem('credit') * 1);
+    }
+}
+
+export async function fetchPurchaseHistory() {
+    const response = await fetch('http://localhost:3000/purchase/history', {
+        headers: {
+            'X-Authorization': localStorage.getItem('accessToken')
+        }
+    });
+
+    if(!response.ok) throw new Error((await response.json()).message);
+    else {
+        return await response.json();
     }
 }
 
