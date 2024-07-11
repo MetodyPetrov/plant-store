@@ -6,8 +6,19 @@ const { isAuth } = require('../middlewares/auth');
 
 router.use(isAuth);
 
-// router.get('/', async (req, res) => {
-// }); // purchase history...
+router.get('/history', async (req, res) => {
+    try {
+        const collection = await getCollection('account-purchase-history');
+        const history = await collection.find({ account: req.user.username }).toArray();
+        for (let i = 0; i < history.length; i++) {
+            history[i].date = new ObjectId(history[i]._id).getTimestamp();
+        }
+        res.status(200).json(history);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
 
 router.post('/buy', async (req, res) => {
     const accountsCollection = await getCollection('accounts');
