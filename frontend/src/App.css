@@ -492,7 +492,32 @@ footer {
     border-bottom-right-radius: 20px;
 }
 
-
+.purchase-history-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: var(--about-bushes-bg);
+    border: solid black 1px;
+    margin: 50px;
+    padding: 10px;
+    border-radius: 20px;
+    color: var(--red-button-hvr);
+    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+}
+.purchase-history-container > p {
+    text-shadow: none;
+    font-weight: 700;
+}
+.purchase-history-container > h3 {
+    color: var(--storepage-bg);
+}
+.purchase-history-container > h4 {
+    color: var(--add-offer-bg)
+}
+.history-list > li {
+    color: white;
+    font-size: 30px;
+}
 
 
 .cartpage-bg {
