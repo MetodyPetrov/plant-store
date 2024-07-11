@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { fetchGenerateCredit } from "../utils/http";
+import HistoryList from "../history/HistoryList";
 
 export default function Account() {
     const navigate = useNavigate();
@@ -41,8 +42,9 @@ export default function Account() {
                         <br/>
                     </>
                 }
-                <ol> Purchase history:
-                    
+                <h1>Purchase history:</h1>
+                <ol className="history-list">
+                    <HistoryList/>
                 </ol>
             </div>
         </>
