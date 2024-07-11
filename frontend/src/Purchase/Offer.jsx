@@ -5,7 +5,7 @@ import Quantity from "../childComponents/Quantity";
 import OfferDescription from "../childComponents/OfferDescription";
 import CartIcon from "../childComponents/CartIcon";
 import { CartContext } from "./CartContext";
-import AdminOptions from "../childComponents/AdminOptions";
+import AdminOptions from "../admin/AdminOptions";
 
 export default function Offer({ offer, searchQuery, displayType = false, refetchOffers }) {
     const { addItemToCart } = useContext(CartContext);

@@ -3,7 +3,7 @@ import { fetchOffers } from '../utils/http';
 
 import ProgressDialog from '../Dialogs/ProgressDialog';
 import Offer from './Offer';
-import AddOffer from '../childComponents/AddOffer';
+import AddOffer from '../admin/AddOffer';
 import { useEffect, useState } from 'react';
 
 export default function Store() {
