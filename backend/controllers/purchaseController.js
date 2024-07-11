@@ -13,6 +13,7 @@ router.get('/history', async (req, res) => {
         for (let i = 0; i < history.length; i++) {
             history[i].date = new ObjectId(history[i]._id).getTimestamp();
         }
+        history.reverse();
         res.status(200).json(history);
     } catch (err) {
         console.error(err);
