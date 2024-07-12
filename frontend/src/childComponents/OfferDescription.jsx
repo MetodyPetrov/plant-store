@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
-export default function OfferDescription({ pos, children, unmount, classes = '' }) {
-    const descriptionRef = useRef();
+export default function OfferDescription({ pos, children, unmount, classes = '', description }) {
+    const descriptionRef = useRef(null);
 
     useEffect(() => {
         const handleClick = (event) => !descriptionRef.current?.contains(event.target) && pos.target !== event.target && unmount();
@@ -16,6 +16,6 @@ export default function OfferDescription({ pos, children, unmount, classes = '' 
             position: 'absolute',
             left: pos.clientX,
             top: pos.clientY
-        }} className={"offer-description " + classes} ref={descriptionRef}>{children}</p>
+        }} className={"offer-description " + classes} ref={descriptionRef} contentEditable={description && true} suppressContentEditableWarning={description && true} onInput={(e) => description(e.target.innerText)}>{children}</p>
     );
 }
