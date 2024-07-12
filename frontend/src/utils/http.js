@@ -1,3 +1,5 @@
+import { isValidImageUrl } from "./functions";
+
 export async function fetchOffers({ signal }) {
     const response = await fetch('http://localhost:3000/offers', { 
         signal: signal,
@@ -10,6 +12,28 @@ export async function fetchOffers({ signal }) {
     else return response.json();
 }
 
+export async function fetchAddOffer(offer) {
+    const isValidImage = await isValidImageUrl(offer.url);
+    if(!isValidImage) {
+        alert('Invalid image url.');
+        return;
+    }
+
+    const response = await fetch('http://localhost:3000/admin/offers/create', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Authorization': localStorage.getItem('accessToken')
+        },
+        body: JSON.stringify(offer)
+    });
+
+    const output = (await response.json()).message;
+
+    alert(output);
+    if(!response.ok) throw new Error(output);
+}
+
 export async function fetchOfferQuantityChange(offerId, quantity = 1, mode) {
     const response = await fetch(`http://localhost:3000/admin/offers/${offerId}/${mode}-quantity`, {
         method: 'PUT',
@@ -20,7 +44,12 @@ export async function fetchOfferQuantityChange(offerId, quantity = 1, mode) {
         body: JSON.stringify({ quantity })
     });
 
-    if(!response.ok) alert(`Unsuccessful ${mode}.`);
+    const output = (await response.json()).message;
+
+    if(!response.ok) {
+        alert(output);
+        throw new Error(output);
+    }
     else return true;
 }
 
@@ -91,8 +120,11 @@ export async function fetchCartCheckout(cart) {
         },
         body: JSON.stringify(request)
     });
-    alert((await response.json()).message);
+    
+    const output = (await response.json()).message;
+
+    alert(output);
     if(response.ok) localStorage.setItem('credit', cart.reduce((credit, product) => credit - product.buyQuantity * parseFloat(product.price, 10).toFixed(2) * 100, localStorage.getItem('credit')));
-    else return false;
+    else throw new Error(output);
     return true;
 }
