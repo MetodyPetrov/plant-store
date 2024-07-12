@@ -7,7 +7,7 @@ import CartIcon from "../childComponents/CartIcon";
 import { CartContext } from "./CartContext";
 import AdminOptions from "../admin/AdminOptions";
 
-export default function Offer({ offer, searchQuery, displayType = false, refetchOffers }) {
+export default function Offer({ offer, searchQuery, displayType = false, refetchOffers, adminOptions = true, ...props }) {
     const { addItemToCart } = useContext(CartContext);
 
     const inputQuantity = useRef(null);
@@ -59,11 +59,13 @@ export default function Offer({ offer, searchQuery, displayType = false, refetch
         else highlightSearch(offer?.price, setOfferPrice);
         
     }, [searchQuery, offer.name, offer.price]);
+    
+    const { className, ...rest } = props;
 
     return (
-        <div className="offer">
+        <div className={"offer " + className || ''} {...rest}>
             { viewAdminOptions }
-            <Link to={`/store/${offer?._id}`}><img src={offer?.url} alt={offer?.name} className="offer-img" onContextMenu={handleRightClick}></img></Link>
+            <Link to={`/store/${offer?._id}`}><img src={offer?.url} alt={offer?.name} className="offer-img" onContextMenu={adminOptions ? handleRightClick : undefined}></img></Link>
             <br/>
             <h1 className="offer-title" onClick={(e) => setViewDescription(e)}>{offerTitle || 'Unset Title'}</h1>
 
