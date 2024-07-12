@@ -191,6 +191,29 @@ footer {
 .add-offer-img:hover {
     cursor: pointer;
 }
+.img-add-container {
+    background-color: var(--cart-container-bg);
+    padding: 20px;
+    width: 50vw;
+    height: 25vh;
+    border: solid white 1px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.img-add-container > input {
+    height: 40%;
+    width: 100%;
+    outline: none;
+    font-size: 35px;
+    border-radius: 20px;
+}
+.img-add-container > button {
+    width: 50px;
+    height: 50px;
+}
 .offer-title {
     cursor: pointer;
     transition: 1s;
@@ -257,7 +280,13 @@ footer {
     cursor: default;
     user-select: none;
 }
-.quantity-selector > input {
+.max-quantity.admin {
+    font-size: initial;
+    max-width: 32px;
+    height: 18px;
+    border: none;
+}
+.input-quantity {
     font-size: 30px;
     text-align: center;
     outline: none;
@@ -358,6 +387,20 @@ footer {
 .add-offer-description {
     background-color: var(--add-offer-description-bg);
     color: var(--add-offer-description-txt);
+}
+.add-offer-confirm {
+    background-color: var(--cart-container-bg);
+    width: 100%;
+    color: white;
+    font-size: 50px;
+    border: solid red 1px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.preview-offer {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    background-image: radial-gradient(circle at 50% 50%, var(--about-bushes-bg), var(--about-bushes-bg));
 }
 
 
@@ -743,10 +786,7 @@ footer {
     left: 50%;
     transform: translate(-50%, -50%);
     outline: none;
-}
-.modal-dialog img {
-    object-fit: contain;
-    max-height: 70vh;
+    border: none;
 }
 .modal-dialog:-internal-dialog-in-top-layer::backdrop { 
     position: fixed; inset: 0px;
