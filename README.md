@@ -40,12 +40,12 @@ this is the MongoDB UI client.
 
 
 7) From MongoDB Compass create a database
-named "Store" (capitalized), and also create two 
-collections in it (named "accounts" and "offers").
+named "Store" (capitalized), and also create three
+collections in it (named "accounts", "offers" and "account-purchase-history").
 
 
 8) Import the contents of these two collections
-from the files "Store.accounts.json" and 
+from the files "Store.accounts.json", "Store.account-purchase-history.json" and
 "Store.offers.json" which are available in the root
 folder of this Git repo.
 
