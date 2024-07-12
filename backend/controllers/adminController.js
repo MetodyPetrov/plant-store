@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const { getCollection } = require('../utils/utils');
 
-const { ObjectId } = require('mongodb');
+const { ObjectId, Int32 } = require('mongodb');
 const { isAuth } = require('../middlewares/auth');
 const { isAdmin } = require('../middlewares/admin');
 
@@ -24,6 +24,37 @@ router.put('/credit', async (req, res) => {
     }
 });
 
+router.post('/offers/create', async (req, res) => {
+    try {
+        const collection = await getCollection('offers');
+        
+        if(isNaN(req.body.quantity)) throw new Error('Invalid offer quantity');
+
+        // NOTE: Image validation is part of the frontend
+
+        const offer = {
+            name: req.body.name,
+            price: req.body.price,
+            quantity: new Int32(req.body.quantity),
+            type: req.body.type,
+            url: req.body.url,
+            description: req.body.description
+        }
+
+        for (const key in offer) {
+            if (offer.hasOwnProperty(key)) {
+                if(!offer[key]) throw new Error(`Undefined offer property: ${key}`);
+            }
+        }
+
+        const result = await collection.insertOne(offer);
+        if(result.insertedId) res.status(201).json({ message: 'Offer successfully created!', offerId: result.insertedId });
+    } catch(err) {
+        console.error(err.message);
+        res.status(500).json({ message: err.message || 'Internal server error' });
+    }
+});
+
 router.put('/offers/:id/increase-quantity', async (req, res) => {
     try {
         const collection = await getCollection('offers');
@@ -37,9 +68,16 @@ router.put('/offers/:id/increase-quantity', async (req, res) => {
         res.status(500).json({ message: 'Unsuccessful increase' });
     }
 });
+
 router.put('/offers/:id/decrease-quantity', async (req, res) => {
     try {
         const collection = await getCollection('offers');
+        const offer = await collection.findOne({ _id: new ObjectId(req.params.id) });
+        if(offer.quantity <= 0) {
+            res.status(500).json({ message: 'Cannot decrease a product with a quantity of 0.' });
+            return;
+        }
+
         const result = await collection.updateOne(
             { _id: new ObjectId(req.params.id) },
             { $inc: { quantity: -req.body.quantity * 1 } }
