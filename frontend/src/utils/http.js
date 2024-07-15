@@ -32,6 +32,7 @@ export async function fetchAddOffer(offer) {
 
     alert(output);
     if(!response.ok) throw new Error(output);
+    else return true;
 }
 
 export async function fetchOfferQuantityChange(offerId, quantity = 1, mode) {
