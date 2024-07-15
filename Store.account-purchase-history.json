@@ -1,0 +1,24 @@
+[{
+  "_id": {
+    "$oid": "668f0d8e8dbfd3948535b448"
+  },
+  "account": "Metodi",
+  "product": "Escallonia 'Gold Ellen'",
+  "amount": 40
+},
+{
+  "_id": {
+    "$oid": "668f0d8e8dbfd3948535b449"
+  },
+  "account": "Metodi",
+  "product": "Evergreen 'Celina' Plant",
+  "amount": 10
+},
+{
+  "_id": {
+    "$oid": "668f30437182585f128a1d96"
+  },
+  "account": "Metodi",
+  "product": "Escallonia 'Gold Ellen'",
+  "amount": 4
+}]

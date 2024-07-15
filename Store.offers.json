@@ -13,10 +13,142 @@
   "_id": {
     "$oid": "667e9f62c22a2de620e558a3"
   },
-  "name": "Evergreen Hebe 'Celina' Plant",
+  "name": "Evergreen 'Celina' Plant",
   "price": "29.97 lv.",
-  "quantity": 5,
+  "quantity": 6,
   "type": "Hebe Schrub",
   "url": "https://www.gardeningexpress.co.uk/media/catalog/product/cache/fa4e57de89a0fb1427d2c82c53fb200f/h/e/hebe-celina-flowering-plant750x750.webp",
   "description": "A dwarf evergreen shrub to around 30cm high, with dark red-brown stems and narrow, glossy green leaves that are slightly toothed towards the tips. Palest lilac to near-white flowers are produced in clusters at the tips of the stems in late spring"
+},
+{
+  "_id": {
+    "$oid": "66944386c730e00ca1afb488"
+  },
+  "name": "Fuchsia 'Riccartonii'",
+  "price": "38.83 lv",
+  "quantity": 10,
+  "type": "Hebe Schrub",
+  "url": "https://www.gardeningexpress.co.uk/media/catalog/product/cache/fa4e57de89a0fb1427d2c82c53fb200f/f/u/fuchsia-riccartonii-1.webp",
+  "description": "A robust, upright, deciduous shrub to 2m in height, with small dark green leaves slightly bronzed. Small single flowers, with crimson tubes and sepals, and violet-purple corollas are produced in summer and autumn; ideal for hedging in frost-free locations"
+},
+{
+  "_id": {
+    "$oid": "669448cc149c395a3251e27b"
+  },
+  "name": "Euonymus Duc D'anjou",
+  "price": "30.19 lv",
+  "quantity": 30,
+  "type": "Hebe Schrub",
+  "url": "https://www.gardeningexpress.co.uk/media/catalog/product/cache/fa4e57de89a0fb1427d2c82c53fb200f/e/u/euonymus_japonicus_ducdanjou_1_5.webp",
+  "description": "An upright, evergreen shrub with ovate, glossy variegated leaves which are serrated at the edges. Small, insignificant green flowers appear in late spring or early summer"
+},
+{
+  "_id": {
+    "$oid": "66944a7e86d26ea6e65b97f3"
+  },
+  "name": "Fuchsia 'Versicolor'",
+  "price": "30.19 lv",
+  "quantity": 12,
+  "type": "Hebe Schrub",
+  "url": "https://www.gardeningexpress.co.uk/media/catalog/product/cache/fa4e57de89a0fb1427d2c82c53fb200f/f/u/fuchsia-magellanica-versicolor-2.webp",
+  "description": "A deciduous shrub with small, grey-green leaves variably margined with cream and flushed pink when young; flowers slender, with red tube and sepals and purple petals\n"
+},
+{
+  "_id": {
+    "$oid": "66944c55e83130612c90d252"
+  },
+  "name": "Garrya thurettii - Silk Tassle",
+  "price": "57.94 lv.",
+  "quantity": 4,
+  "type": "Hebe Schrub",
+  "url": "https://www.gardeningexpress.co.uk/media/catalog/product/cache/fa4e57de89a0fb1427d2c82c53fb200f/b/2/b2bdeacb-210f-486e-b87f-491734e5ae2f.webp",
+  "description": "'James Roof' is a large vigorous bushy evergreen shrub with leathery dark green leaves. Flowers male, in drooping grey-green catkins to 20cm in length"
+},
+{
+  "_id": {
+    "$oid": "66945fa9daffa05d6d7c2f9b"
+  },
+  "name": "Hebe andersonii Elsa",
+  "price": "13.91 lv.",
+  "quantity": 15,
+  "type": "Hebe Schrub",
+  "url": "https://www.gardeningexpress.co.uk/media/catalog/product/cache/fa4e57de89a0fb1427d2c82c53fb200f/h/e/hebe-linda-1.webp",
+  "description": "A large, evergreen shrub with narrowly oval, pointed leaves on dark stems. Long sprays of tiny, purple flowers, fading to white, are produced from mid-summer into autumn\n"
+},
+{
+  "_id": {
+    "$oid": "6694615adaffa05d6d7c2f9c"
+  },
+  "name": "Double Rose of Sharon Tree - Duc de Brabant",
+  "price": "92.86 lv.",
+  "quantity": 11,
+  "type": "Hibiscus",
+  "url": "https://www.gardeningexpress.co.uk/media/catalog/product/cache/fa4e57de89a0fb1427d2c82c53fb200f/h/i/hibiscus-tree-double-purple-1.webp",
+  "description": "'Duc de Brabant' forms a vase-shaped shrub to 3m tall with upright stems bearing large, double flowers ranging in colour from reddish-pink to purplish-red"
+},
+{
+  "_id": {
+    "$oid": "669462b4a0ad8ed5d8582cac"
+  },
+  "name": "Syriacus Blue Bird (Oiseau Bleu)",
+  "price": "46.32 lv.",
+  "quantity": 40,
+  "type": "Hibiscus",
+  "url": "https://www.gardeningexpress.co.uk/media/catalog/product/cache/fa4e57de89a0fb1427d2c82c53fb200f/h/i/hibiscus-blue-bird-750x750.webp",
+  "description": "A medium-sized, upright deciduous shrub with lobed, dark green leaves. Single, violet-blue flowers with a maroon centre, to 8cm in width, appear in late summer and autumn\n"
+},
+{
+  "_id": {
+    "$oid": "66946405a0ad8ed5d8582cad"
+  },
+  "name": "Syriacus Woodbridge - Pink Tree Hollyhock",
+  "price": "41.68 lv.",
+  "quantity": 9,
+  "type": "Hibiscus",
+  "url": "https://www.gardeningexpress.co.uk/media/catalog/product/cache/fa4e57de89a0fb1427d2c82c53fb200f/w/o/woodbridge.webp",
+  "description": "A medium-sized, upright deciduous shrub with dark, lobed leaves. Flowers to 10cm in width, single, deep pink, with dark red centres"
+},
+{
+  "_id": {
+    "$oid": "669464b9a0ad8ed5d8582cae"
+  },
+  "name": "Hibiscus sinensis rosea 'Tivoli'",
+  "price": "34.81 lv.",
+  "quantity": 21,
+  "type": "Hibiscus",
+  "url": "https://www.gardeningexpress.co.uk/media/catalog/product/cache/fa4e57de89a0fb1427d2c82c53fb200f/h/i/hibiscus-rosa-sinensis-tivoli-2-750x750.webp",
+  "description": "Bushy upright rose about 40-60cm tall, with glossy dark green leaves. Lightly scented, fully double, butter-yellow blooms 10-15cm across, borne singly on long stems, almost continuously in flower from early summer to early autumn"
+},
+{
+  "_id": {
+    "$oid": "66946641a0ad8ed5d8582caf"
+  },
+  "name": "Japonica Polar Passion - Passion Frost - Evergreen",
+  "price": "41.68 lv.",
+  "quantity": 13,
+  "type": "Pieris - Lily of the Valley Shrub",
+  "url": "https://www.gardeningexpress.co.uk/media/catalog/product/cache/fa4e57de89a0fb1427d2c82c53fb200f/p/i/pieris_japonica_passion_party_passion_frost___ralto___-_concept_plants__3_.webp",
+  "description": "A compact, evergreen shrub with shiny, green foliage, pale when young, and large, drooping sprays of small, pink and white, urn-shaped flowers in mid-spring\n"
+},
+{
+  "_id": {
+    "$oid": "6694668ea0ad8ed5d8582cb0"
+  },
+  "name": "Japonica Temple Bells",
+  "price": "41.68 lv.",
+  "quantity": 18,
+  "type": "Pieris - Lily of the Valley Shrub",
+  "url": "https://www.gardeningexpress.co.uk/media/catalog/product/cache/fa4e57de89a0fb1427d2c82c53fb200f/p/i/pieris-temple-bells.webp",
+  "description": "A slow-growing evergreen shrub, to around 1.5m high, with an upright habit and elliptic, slightly toothed, glossy green leaves that are deep red when young. Pendent clusters of relatively large, scented, urn-shaped white flowers are borne at the tips of the stems in spring\n"
+},
+{
+  "_id": {
+    "$oid": "6694670ea0ad8ed5d8582cb1"
+  },
+  "name": "Japonica Little Heath - Evergreen",
+  "price": "37.13 lv.",
+  "quantity": 7,
+  "type": "Pieris - Lily of the Valley Shrub",
+  "url": "https://www.gardeningexpress.co.uk/media/catalog/product/cache/fa4e57de89a0fb1427d2c82c53fb200f/p/i/pieris-little-heather1000x1000.webp",
+  "description": "'Little Heath' is a compact, rounded evergreen shrub with small, dark green leaves, coppery-red when young. Flowers few or none\n"
 }]
