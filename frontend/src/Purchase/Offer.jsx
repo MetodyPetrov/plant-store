@@ -9,6 +9,7 @@ import AdminOptions from "../admin/AdminOptions";
 
 export default function Offer({ offer, searchQuery, displayType = false, refetchOffers, adminOptions = true, ...props }) {
     const { addItemToCart } = useContext(CartContext);
+    const offerRef = useRef(null);
 
     const inputQuantity = useRef(null);
     const [ viewDescription, setViewDescription ] = useState(false);
@@ -62,12 +63,20 @@ export default function Offer({ offer, searchQuery, displayType = false, refetch
     
     const { className, ...rest } = props;
 
+    function handleShowDescription(e) {
+        if(className?.includes('preview-offer')) {
+            e.clientX = e.clientX - window.innerWidth / 2 + offerRef.current.offsetWidth / 2 + 8;
+            e.clientY = e.clientY - window.innerHeight / 2 + offerRef.current.offsetHeight / 2 + 31;
+        }
+        setViewDescription(e);
+    } 
+
     return (
-        <div className={"offer " + className || ''} {...rest}>
+        <div className={"offer " + className || ''} {...rest} ref={offerRef}>
             { viewAdminOptions }
             <Link to={`/store/${offer?._id}`}><img src={offer?.url} alt={offer?.name} className="offer-img" onContextMenu={adminOptions ? handleRightClick : undefined}></img></Link>
             <br/>
-            <h1 className="offer-title" onClick={(e) => setViewDescription(e)}>{offerTitle || 'Unset Title'}</h1>
+            <h1 className="offer-title" onClick={handleShowDescription}>{offerTitle || 'Unset Title'}</h1>
 
             { viewDescription && <OfferDescription pos={viewDescription} unmount={() => setViewDescription(false)}>{offer?.description || 'unset description'}</OfferDescription>}
             <div className="flex-filler"></div>
