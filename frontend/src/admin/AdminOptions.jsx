@@ -30,8 +30,8 @@ export default function AdminOptions({ offerId, unmount, pos, refetchOffers }) {
     return (
         <div ref={optionsRef} style={{
             position: 'absolute',
-            left: pos.clientX,
-            top: pos.clientY
+            left: pos.clientX + window.scrollX,
+            top: pos.clientY + window.scrollY
         }} className={`opacity-appearance ${isVisible ? 'visible' : ''}`}>
             <button className="admin-plus-button" onClick={() => changeQuantity('increase')}><span>+</span></button>
             <button className="admin-minus-button" onClick={() => changeQuantity('decrease')}><span>-</span></button>
