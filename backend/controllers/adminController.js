@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const { getCollection } = require('../utils/utils');
+const { getCollection, client } = require('../utils/utils');
 
 const { ObjectId, Int32 } = require('mongodb');
 const { isAuth } = require('../middlewares/auth');
@@ -58,6 +58,29 @@ router.post('/offers/create', async (req, res) => {
     } catch(err) {
         console.error(err.message);
         res.status(500).json({ message: err.message || 'Internal server error' });
+    }
+});
+
+router.put('/offers/:id/edit', async (req, res) => {
+    const session = client.startSession();
+    try {
+        const updates = req.body;
+        const collection = await getCollection('offers');
+
+        const transactionResults = await session.withTransaction(async () => {
+            for (const key in updates) {
+                if (Object.hasOwnProperty.call(updates, key)) {
+                    const update = await collection.updateOne(
+                        { _id: new ObjectId(req.params.id) },
+                        { $set: { [key]: updates[key] } }
+                    );
+                    if(!update.modifiedCount) throw new Error(`Error updating ${key}`);
+                }
+            }
+        })
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ message: err.message || 'Failed to save changes' });
     }
 });
 
