@@ -32,34 +32,33 @@ export default function Offer({ offer, searchQuery, displayType = false, refetch
     }
 
     useEffect(() => {
-        function highlightSearch(attribute, stateChange) { 
+        function highlightSearch(searchString, attribute, stateChange) { 
             let newTranscript = [];
             for (let i = 0; i < attribute.length; i++) {
                 let part = '';
-                for (let j = 0; j < searchQuery.length && j + i < attribute.length; j++) {
+                for (let j = 0; j < searchString.length && j + i < attribute.length; j++) {
                     part += attribute[j + i];
                 }
-                if(part.toLowerCase() === searchQuery.toLowerCase()) {
-                    i += searchQuery.length - 1;
+                if(part.toLowerCase() === searchString.toLowerCase()) {
+                    i += searchString.length - 1;
                     newTranscript.push(<span className="highlighted" key={i}>{part}</span>);
                 }
                 else newTranscript.push(attribute[i]);
             }
             stateChange(newTranscript);
         }
+        
+        searchQuery.type && highlightSearch(searchQuery.type, offer?.type, setOfferType);
+        searchQuery.name && highlightSearch(searchQuery.name, offer?.name, setOfferTitle);
+        searchQuery.price && highlightSearch(searchQuery.price, offer?.price, setOfferPrice);
 
-        if(!searchQuery) {
+        return () => {
             setOfferTitle(offer?.name);
             setOfferPrice(offer?.price);
             setOfferType(offer?.type);
-            return;
-        }
-
-        if(displayType) highlightSearch(offer?.type, setOfferType);
-        else if(isNaN(searchQuery)) highlightSearch(offer?.name, setOfferTitle);
-        else highlightSearch(offer?.price, setOfferPrice);
+        };
         
-    }, [searchQuery, offer.name, offer.price]);
+    }, [searchQuery, offer.name, offer.price, offer.type]);
     
     const { className, ...rest } = props;
 
@@ -72,7 +71,7 @@ export default function Offer({ offer, searchQuery, displayType = false, refetch
     } 
 
     return (
-        <div className={"offer " + className || ''} {...rest} ref={offerRef}>
+        <div className={"offer " + (className || '')} {...rest} ref={offerRef}>
             { viewAdminOptions }
             <Link to={`/store/${offer?._id}`}><img src={offer?.url} alt={offer?.name} className="offer-img" onContextMenu={adminOptions ? handleRightClick : undefined}></img></Link>
             <br/>

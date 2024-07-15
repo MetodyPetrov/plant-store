@@ -13,7 +13,10 @@ export default function Store() {
     });
 
     const [ offers, setOffers ] = useState(null);
-    const [ search, setSearch ] = useState(null);
+
+    const [ searchMode, setSearchMode ] = useState('default');
+
+    const [ defaultSearch, setDefaultSearch ] = useState(null);
     const [ typeSearch, setTypeSearch ] = useState(false);
 
     useEffect(() => {
@@ -21,36 +24,38 @@ export default function Store() {
     }, [data]);
 
     useEffect(() => {
-        handleSearch('mode');
-    }, [typeSearch]);
-
-    function handleSearch(e) {
-        if(e === 'mode') e = { target: { value: search } };
-        if(!e.target.value) {
+        if(!typeSearch && !defaultSearch) {
             setOffers(data);
-            setSearch('');
+        } else {
+            handleSearch();
         }
-        else {
-            setSearch(e.target.value);
-            setOffers(() => {
-                let originalOffers = [...data];
-                if(isNaN(e.target.value)) {
-                    if(typeSearch) originalOffers = originalOffers.filter(offer => offer.type.toLowerCase().includes(e.target.value.toLowerCase()));
-                    else originalOffers = originalOffers.filter(offer => offer.name.toLowerCase().includes(e.target.value.toLowerCase()));
-                }
-                else originalOffers = originalOffers.filter(offer => offer.price.includes(e.target.value));
-                return originalOffers;
-            });
-        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ typeSearch, defaultSearch, searchMode ]);
+
+    function handleSearch() {
+        setOffers(() => {
+            let originalOffers = [...data];
+
+            if(defaultSearch && isNaN(defaultSearch)) originalOffers = originalOffers.filter(offer => offer.name.toLowerCase().includes(defaultSearch.toLowerCase()));
+            else if(defaultSearch) originalOffers = originalOffers.filter(offer => offer.price.toLowerCase().includes(defaultSearch.toLowerCase()));
+
+            if(searchMode === 'type' && typeSearch) {
+                originalOffers = originalOffers.filter(offer => offer.type.toLowerCase().includes(typeSearch.toLowerCase()));
+                // TODO: go through typeSearch and seperate types using ',' e.g. "Type: Evergreen, Hebe Schrub, Lily" and when the user searches for 'Evegreen, Lily they should highlight'
+            }
+
+            return originalOffers;
+        });
     }
     
     return (
         <>
             <div className="page-bg storepage-bg"></div>
             <div className="search-bar-wrapper">
-                <input className="search-bar" placeholder="Search Product" onChange={handleSearch}></input>
+                <input className="search-bar" placeholder="Search Product" onChange={(e) => setDefaultSearch(e.target.value)}></input>
                 <div className="type-search">
-                    <input type="radio" id="type" readOnly checked={typeSearch} onClick={() => setTypeSearch((prev) => !prev)}></input>
+                    <input type="search" className="type-input" onChange={(e) => setTypeSearch(e.target.value)}></input>
+                    <input type="radio" id="type" readOnly checked={searchMode === 'type'} onClick={() => setSearchMode((mode) => mode === 'default' ? 'type' : 'default')}></input> 
                     <label htmlFor="type">type</label>
                 </div>
             </div>
@@ -61,10 +66,8 @@ export default function Store() {
             <>
                 <div className="offers-container-wrapper">
                     <div className="offers-container">
-                        {localStorage.getItem('client') === 'admin' && <AddOffer reloadOffers={refetch} displayType={typeSearch}/>}
-                        {offers.map((offer, index) => (
-                            <Offer key={index} offer={offer} searchQuery={search} displayType={typeSearch} refetchOffers={refetch}/>
-                        ))}
+                        {localStorage.getItem('client') === 'admin' && <AddOffer reloadOffers={refetch} />}
+                        {offers.map((offer) => <Offer key={offer._id} offer={offer} searchQuery={{ name: defaultSearch, type: typeSearch, price: defaultSearch }} displayType={searchMode === 'type'} refetchOffers={refetch}/> )}
                     </div>
                 </div>
             </>
