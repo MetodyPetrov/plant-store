@@ -61,7 +61,7 @@ export default function Store() {
             <>
                 <div className="offers-container-wrapper">
                     <div className="offers-container">
-                        {localStorage.getItem('client') === 'admin' && <AddOffer displayType={typeSearch}/>}
+                        {localStorage.getItem('client') === 'admin' && <AddOffer reloadOffers={refetch} displayType={typeSearch}/>}
                         {offers.map((offer, index) => (
                             <Offer key={index} offer={offer} searchQuery={search} displayType={typeSearch} refetchOffers={refetch}/>
                         ))}
