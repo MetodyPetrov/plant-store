@@ -35,6 +35,23 @@ export async function fetchAddOffer(offer) {
     else return true;
 }
 
+export async function fetchEditOffer(offerId, offerChanges) {
+    const response = await fetch(`http://localhost:3000/admin/offers/${offerId}/edit`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Authorization': localStorage.getItem('accessToken')
+        },
+        body: JSON.stringify(offerChanges)
+    });
+
+    const output = (await response.json()).message;
+    
+    alert(output);
+    if(!response.ok) throw new Error(output);
+    else return true;
+}
+
 export async function fetchOfferQuantityChange(offerId, quantity = 1, mode) {
     const response = await fetch(`http://localhost:3000/admin/offers/${offerId}/${mode}-quantity`, {
         method: 'PUT',
