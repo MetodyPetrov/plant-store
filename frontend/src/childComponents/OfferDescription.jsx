@@ -14,8 +14,8 @@ export default function OfferDescription({ pos, children, unmount, classes = '',
     return (
         <p style={{
             position: 'absolute',
-            left: pos.clientX,
-            top: pos.clientY
+            left: pos.clientX + window.scrollX,
+            top: pos.clientY + window.scrollY
         }} className={"offer-description " + classes} ref={descriptionRef} contentEditable={description && true} suppressContentEditableWarning={description && true} onInput={(e) => description(e.target.innerText)}>{children}</p>
     );
 }
