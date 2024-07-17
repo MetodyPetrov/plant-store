@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
 const { getCollection, client } = require('../utils/utils');
+const { validateOfferInfo } = require('../utils/helperFunctions');
 
 const { ObjectId, Int32 } = require('mongodb');
 const { isAuth } = require('../middlewares/auth');
@@ -26,33 +27,7 @@ router.put('/credit', async (req, res) => {
 
 router.post('/offers/create', async (req, res) => {
     try {
-        const collection = await getCollection('offers');
-        
-        // NOTE: Image validation is part of the frontend
-        const offer = {
-            name: req.body.name,
-            price: req.body.price,
-            quantity: new Int32(req.body.quantity),
-            type: req.body.type,
-            url: req.body.url,
-            description: req.body.description
-        }
-
-        for (const key in offer) {
-            if (offer.hasOwnProperty(key)) {
-                if(!offer[key]) throw new Error(`Undefined offer property: ${key}`);
-            }
-        }
-
-        const validatePrice = /^\d{2}\.\d{2} lv\.$/;
-
-        if(isNaN(offer.quantity)) throw new Error('Invalid offer quantity');
-        if(isNaN(parseFloat(offer.price, 10).toFixed(2)) || !validatePrice.test(offer.price)) throw new Error('Invalid offer price');
-        if(typeof offer.description !== 'string') throw new Error('Invalid offer description');
-
-        const existingOffer = await collection.findOne({ name: req.body.name });
-        if(existingOffer) throw new Error('Offer already exists');
-
+        validateOfferInfo(req.body, 'full');
         const result = await collection.insertOne(offer);
         if(result.insertedId) res.status(201).json({ message: 'Offer successfully created!', offerId: result.insertedId });
     } catch(err) {
@@ -64,6 +39,7 @@ router.post('/offers/create', async (req, res) => {
 router.put('/offers/:id/edit', async (req, res) => {
     const session = client.startSession();
     try {
+        await validateOfferInfo(req.body);
         const updates = req.body;
         const collection = await getCollection('offers');
 
@@ -77,7 +53,10 @@ router.put('/offers/:id/edit', async (req, res) => {
                     if(!update.modifiedCount) throw new Error(`Error updating ${key}`);
                 }
             }
+            return 'Changes saved successfully!';
         })
+
+        res.status(200).json({ message: transactionResults });
     } catch (err) {
         console.error(err.message);
         res.status(500).json({ message: err.message || 'Failed to save changes' });
