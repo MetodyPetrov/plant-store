@@ -4,6 +4,7 @@
     --button-submit: rgb(38, 38, 190);
     --red-button: rgb(160, 0, 0);
     --red-button-hvr: rgb(211, 0, 0);
+    --grey: rgb(87, 87, 87);
 
     --nav-bar-bg: rgb(243, 255, 144);
     --nav-button-hvr: rgb(155, 236, 0);
@@ -17,11 +18,6 @@
     --homepage-txt: rgb(0, 0, 0);
 
     --storepage-bg: rgb(5, 146, 18);
-
-    --add-offer-bg-img: rgb(128, 128, 128);
-    --add-offer-bg: rgb(87, 87, 87);
-    --add-offer-description-bg: var(--add-offer-bg);
-    --add-offer-description-txt: rgb(255, 255, 255);
 
     --loginpage-bg: rgb(37, 67, 54);
     --auth-button-bg: rgb(253, 155, 99);
@@ -74,6 +70,22 @@ footer {
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     z-index: 0;
+}
+.credits-section {
+    width: 100vw;
+    background-color: var(--nav-bar-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.credits-section a {
+    text-decoration: none;
+    color: var(--about-bushes-bg);
+    font-weight: 900;
+    transition: 0.2s;
+}
+.credits-section a:hover{
+    color: var(--homepage-bg);
 }
 .error-title {
     position: absolute;
@@ -168,6 +180,7 @@ footer {
 
 .offer {
     display: flex;
+    position: relative;
     flex-direction: column;
     align-items: center;
     width: 380px;
@@ -177,42 +190,11 @@ footer {
     border-radius: 30px; 
     border: solid var(--nav-bar-bg) 1px; 
 }
-.add-offer {
-    background-image: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0), var(--add-offer-bg-img));
-    background-color: var(--add-offer-bg);
-    border: dashed;
-}
 .offer-img {
     max-height: 200px;
     object-fit: contain;
     border: solid black 5px;
     border-radius: 30px;
-}
-.add-offer-img:hover {
-    cursor: pointer;
-}
-.img-add-container {
-    background-color: var(--cart-container-bg);
-    padding: 20px;
-    width: 50vw;
-    height: 25vh;
-    border: solid white 1px;
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-}
-.img-add-container > input {
-    height: 40%;
-    width: 100%;
-    outline: none;
-    font-size: 35px;
-    border-radius: 20px;
-}
-.img-add-container > button {
-    width: 50px;
-    height: 50px;
 }
 .offer-title {
     cursor: pointer;
@@ -301,11 +283,31 @@ footer {
     border-right: none;
     transition: 0.2s;
 }
-.offer-create-button {
-    border: solid black 1px;
-    font-size: 50px;
-    width: 60px;
-    height: 60px;
+.edit-offer-button {
+    fill: white;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    transition: 0.2s;
+    cursor: pointer;
+}
+.edit-offer-button:hover {
+    fill: rgb(180, 180, 180);
+}
+.offer-edit-confirm-button {
+    border: solid blue 1px;
+    font-size: 30px;
+    padding: 5px;
+    border-radius: 20px;
+    transition: 0.5s;
+}
+.offer-edit-confirm-button:hover {
+    border: solid red 1px;
+    background-color: blue;
+    color: white;
+}
+.offer-edit-img-url {
+    font-size: 30px;
 }
 .admin-plus-button:hover {
     background-color: green;
@@ -388,6 +390,22 @@ footer {
     justify-content: center;
     flex-wrap: wrap;
 }
+.add-offer-button {
+    width: 380px;
+    height: 408px;
+    border: none;
+    font-size: 90px;
+    background-color: transparent;
+    background-image: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0), var(--about-bushes-bg));
+    border-radius: 30px;
+    border: solid var(--nav-bar-bg) 1px;
+    color: var(--default-txt);
+    transition: 1s;
+}
+.add-offer-button:hover {
+    color: var(--nav-bar-bg);
+    box-shadow: 0 0 10px var(--storepage-bg);
+}
 .offer-description {
     background-color: var(--nav-bar-bg);
     font-weight: bold;
@@ -398,25 +416,11 @@ footer {
     border: solid black 1px;
     user-select: none;
     cursor: grab;
+    z-index: 1;
 
     animation: slideIn-right 0.5s ease-out forwards;
 }
-.add-offer-description {
-    background-color: var(--add-offer-description-bg);
-    color: var(--add-offer-description-txt);
-}
-.add-offer-confirm {
-    background-color: var(--cart-container-bg);
-    width: 100%;
-    color: white;
-    font-size: 50px;
-    border: solid red 1px;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-}
 .preview-offer {
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
     background-image: radial-gradient(circle at 50% 50%, var(--about-bushes-bg), var(--about-bushes-bg));
 }
 
@@ -572,7 +576,7 @@ footer {
     color: var(--storepage-bg);
 }
 .purchase-history-container > h4 {
-    color: var(--add-offer-bg)
+    color: var(--grey)
 }
 .history-list > li {
     color: white;
