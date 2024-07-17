@@ -36,6 +36,14 @@ export async function fetchAddOffer(offer) {
 }
 
 export async function fetchEditOffer(offerId, offerChanges) {
+    if(offerChanges.url) {
+        const isValidImage = await isValidImageUrl(offerChanges.url);
+        if(!isValidImage) {
+            alert('Invalid image url.');
+            return;
+        }
+    }
+    
     const response = await fetch(`http://localhost:3000/admin/offers/${offerId}/edit`, {
         method: 'PUT',
         headers: {
