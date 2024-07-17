@@ -3,8 +3,8 @@ import { fetchOffers } from '../utils/http';
 
 import ProgressDialog from '../Dialogs/ProgressDialog';
 import Offer from './Offer';
-import AddOffer from '../admin/AddOffer';
 import { useEffect, useState } from 'react';
+import AddOffer from "../admin/AddOffer";
 
 export default function Store() {
     const { data, isPending, refetch } = useQuery({
@@ -20,6 +20,7 @@ export default function Store() {
     const [ typeSearch, setTypeSearch ] = useState(false);
 
     useEffect(() => {
+        console.log(data[0].name);
         setOffers(data);
     }, [data]);
 
@@ -66,7 +67,9 @@ export default function Store() {
             <>
                 <div className="offers-container-wrapper">
                     <div className="offers-container">
-                        {localStorage.getItem('client') === 'admin' && <AddOffer reloadOffers={refetch} />}
+                        {localStorage.getItem('client') === 'admin' &&
+                            <AddOffer reloadOffers={refetch}/>
+                        }
                         {offers.map((offer) => <Offer key={offer._id} offer={offer} searchQuery={{ name: defaultSearch, type: typeSearch, price: defaultSearch }} displayType={searchMode === 'type'} refetchOffers={refetch}/> )}
                     </div>
                 </div>
