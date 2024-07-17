@@ -5,7 +5,10 @@ import Quantity from "../childComponents/Quantity";
 import OfferDescription from "../childComponents/OfferDescription";
 import CartIcon from "../childComponents/CartIcon";
 import { CartContext } from "./CartContext";
+
 import AdminOptions from "../admin/AdminOptions";
+import EditOffer from "../admin/EditOffer";
+import Modal from "../Dialogs/Modal";
 
 export default function Offer({ offer, searchQuery, displayType = false, refetchOffers, adminOptions = true, ...props }) {
     const { addItemToCart } = useContext(CartContext);
@@ -14,6 +17,8 @@ export default function Offer({ offer, searchQuery, displayType = false, refetch
     const inputQuantity = useRef(null);
     const [ viewDescription, setViewDescription ] = useState(false);
     const [ viewAdminOptions, setViewAdminOptions ] = useState(false);
+
+    const [ offerEdit, setOfferEdit] = useState(false);
     
     const [ offerTitle, setOfferTitle] = useState(offer?.name);
     const [ offerPrice, setOfferPrice ] = useState(offer?.price);
@@ -48,10 +53,10 @@ export default function Offer({ offer, searchQuery, displayType = false, refetch
             stateChange(newTranscript);
         }
         
-        searchQuery.type && highlightSearch(searchQuery.type, offer?.type, setOfferType);
-        searchQuery.name && highlightSearch(searchQuery.name, offer?.name, setOfferTitle);
-        searchQuery.price && highlightSearch(searchQuery.price, offer?.price, setOfferPrice);
-
+        searchQuery?.type && highlightSearch(searchQuery.type, offer?.type, setOfferType);
+        searchQuery?.name && highlightSearch(searchQuery.name, offer?.name, setOfferTitle);
+        searchQuery?.price && highlightSearch(searchQuery.price, offer?.price, setOfferPrice);
+        
         return () => {
             setOfferTitle(offer?.name);
             setOfferPrice(offer?.price);
@@ -71,20 +76,31 @@ export default function Offer({ offer, searchQuery, displayType = false, refetch
     } 
 
     return (
-        <div className={"offer " + (className || '')} {...rest} ref={offerRef}>
-            { viewAdminOptions }
-            <Link to={`/store/${offer?._id}`}><img src={offer?.url} alt={offer?.name} className="offer-img" onContextMenu={adminOptions ? handleRightClick : undefined}></img></Link>
-            <br/>
-            <h1 className="offer-title" onClick={handleShowDescription}>{offerTitle || 'Unset Title'}</h1>
-
+        <>
             { viewDescription && <OfferDescription pos={viewDescription} unmount={() => setViewDescription(false)}>{offer?.description || 'unset description'}</OfferDescription>}
-            <div className="flex-filler"></div>
-            { displayType && <p className="offer-type">Type: {offerType}</p> }
-            <div className="offer-info">
-                <h2 className="offer-price">{offerPrice || '0.00 lv'}</h2>
-                <Quantity quantity={offer?.quantity || 0} inpRef={inputQuantity}/>
-                <CartIcon onClick={handleAddProduct} className="add-cart-icon"/>
+            <div className={"offer " + (className || '')} {...rest} ref={offerRef}>
+
+                { localStorage.getItem('client') === 'admin' && <svg onClick={() => setOfferEdit(true)} className="edit-offer-button" xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#5f6368"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg> }
+                { 
+                    offerEdit && 
+                    <Modal unmount={() => setOfferEdit(false)}>
+                        <EditOffer offer={offer} reloadOffers={refetchOffers}/>
+                    </Modal> 
+                }
+
+                { viewAdminOptions }
+                <Link to={`/store/${offer?._id}`}><img src={offer?.url} alt={offer?.name} className="offer-img" onContextMenu={adminOptions ? handleRightClick : undefined}></img></Link>
+                <br/>
+                <h1 className="offer-title" onClick={handleShowDescription}>{offerTitle || 'Unset Title'}</h1>
+
+                <div className="flex-filler"></div>
+                { displayType && <p className="offer-type">Type: {offerType}</p> }
+                <div className="offer-info">
+                    <h2 className="offer-price">{offerPrice || '0.00 lv'}</h2>
+                    <Quantity quantity={offer?.quantity || 0} inpRef={inputQuantity}/>
+                    <CartIcon onClick={handleAddProduct} className="add-cart-icon"/>
+                </div>
             </div>
-        </div>
+        </>
     );
 }
