@@ -27,13 +27,13 @@ export default function Offer({ offer, searchQuery, displayType = false, refetch
     const { changeNavBar, checkNavBarPageExist } = useOutletContext();
     function handleAddProduct() {
         addItemToCart(offer, inputQuantity?.current?.value);
-        if(!checkNavBarPageExist(<CartIcon className="cart-icon"/>)) changeNavBar({ mode: 'ADD', newKey: <CartIcon className="cart-icon"/>, newValue: '/cart' }); // TODO: make sure to add this only once and think about storing the selected items in some context, not sure if it should be the outlet one or no...
+        if(!checkNavBarPageExist(<CartIcon className="cart-icon"/>)) changeNavBar({ mode: 'ADD', newKey: <CartIcon className="cart-icon"/>, newValue: '/cart' });
     }
 
     function handleRightClick(e) {
         if(localStorage.getItem('client') !== 'admin') return;
         e.preventDefault();
-        setViewAdminOptions(<AdminOptions offerId={offer._id} unmount={() => setViewAdminOptions(false)} pos={e} refetchOffers={refetchOffers}/>); // make this into a separate component and add a + and - that sent req for increasing the value of a product
+        setViewAdminOptions(<AdminOptions offerId={offer._id} unmount={() => setViewAdminOptions(false)} pos={e} refetchOffers={refetchOffers}/>); 
     }
 
     useEffect(() => {
@@ -64,21 +64,12 @@ export default function Offer({ offer, searchQuery, displayType = false, refetch
         };
         
     }, [searchQuery, offer.name, offer.price, offer.type]);
-    
-    const { className, ...rest } = props;
-
-    function handleShowDescription(e) {
-        if(className?.includes('preview-offer')) {
-            e.clientX = e.clientX - window.innerWidth / 2 + offerRef.current.offsetWidth / 2 + 8;
-            e.clientY = e.clientY - window.innerHeight / 2 + offerRef.current.offsetHeight / 2 + 31;
-        }
-        setViewDescription(e);
-    } 
 
     return (
         <>
+            { viewAdminOptions }
             { viewDescription && <OfferDescription pos={viewDescription} unmount={() => setViewDescription(false)}>{offer?.description || 'unset description'}</OfferDescription>}
-            <div className={"offer " + (className || '')} {...rest} ref={offerRef}>
+            <div className="offer" ref={offerRef} {...props}>
 
                 { localStorage.getItem('client') === 'admin' && <svg onClick={() => setOfferEdit(true)} className="edit-offer-button" xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#5f6368"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg> }
                 { 
@@ -88,10 +79,9 @@ export default function Offer({ offer, searchQuery, displayType = false, refetch
                     </Modal> 
                 }
 
-                { viewAdminOptions }
                 <Link to={`/store/${offer?._id}`}><img src={offer?.url} alt={offer?.name} className="offer-img" onContextMenu={adminOptions ? handleRightClick : undefined}></img></Link>
                 <br/>
-                <h1 className="offer-title" onClick={handleShowDescription}>{offerTitle || 'Unset Title'}</h1>
+                <h1 className="offer-title" onClick={(e) => setViewDescription(e)}>{offerTitle || 'Unset Title'}</h1>
 
                 <div className="flex-filler"></div>
                 { displayType && <p className="offer-type">Type: {offerType}</p> }
