@@ -95,6 +95,11 @@ export default function NavigationBar() {
                     <Outlet context={{ changeNavBar, checkNavBarPageExist }}/>
                 </main>
                 <footer>No rights reserved</footer>
+                <section className="credits-section">
+                    <h5>credits:</h5>
+                    <a href="https://www.gardeningexpress.co.uk/" target="_blank">gardeningexpress.co.uk</a>
+                    <a href="https://www.rhs.org.uk/" target="_blank">rhs.org.uk</a>
+                </section>
             </CartProvider>
         </>
     );
