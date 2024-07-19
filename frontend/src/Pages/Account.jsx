@@ -3,10 +3,19 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import { fetchGenerateCredit } from "../utils/http";
 import HistoryList from "../history/HistoryList";
 
+import { useMutation } from '@tanstack/react-query';
+
 export default function Account() {
     const navigate = useNavigate();
     const { changeNavBar } = useOutletContext();
     const [ credit, setCredit ] = useState(localStorage.getItem('credit') || 0);
+
+    const { mutate } = useMutation({
+        mutationFn: fetchGenerateCredit,
+        onSuccess: () => {
+            setCredit(localStorage.getItem('credit'));
+        }
+    });
 
     useEffect(() => {
         localStorage.getItem('accessToken') || navigate('/authenticate');
@@ -21,8 +30,7 @@ export default function Account() {
     async function handleAddCredit(event) {
         event.preventDefault();
         const fd = new FormData(event.target);
-        await fetchGenerateCredit(fd.get('credit') * 100);
-        setCredit(localStorage.getItem('credit'));
+        mutate({ credit: fd.get('credit') * 100 });
     }
 
     return (
