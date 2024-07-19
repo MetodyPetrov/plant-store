@@ -4,12 +4,21 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import CartIcon from "../childComponents/CartIcon";
 import { CartContext } from "./CartContext";
 import CheckOutOffer from "./CheckOutOffer";
+import ProgressDialog from "../Dialogs/ProgressDialog";
 import { fetchCartCheckout } from "../utils/http";
+import { useMutation } from '@tanstack/react-query';
 
 export default function CartPage() {
     const { changeNavBar, checkNavBarPageExist } = useOutletContext();
     const { cart, clearCart } = useContext(CartContext);
     const navigate = useNavigate();
+
+    const { mutate, isPending } = useMutation({
+        mutationFn: fetchCartCheckout,
+        onSuccess: () => {
+            clearCart();
+        }
+    });
 
     useEffect(() => {
         if(!checkNavBarPageExist(<CartIcon />)) navigate('/account');
@@ -20,11 +29,12 @@ export default function CartPage() {
 
     async function handleCheckout() {
         if(!localStorage.getItem('accessToken')) navigate('/authenticate');
-        if(await fetchCartCheckout(cart)) clearCart();
+        mutate({ cart: cart });
     }
 
     return (
         <>
+            { isPending && <ProgressDialog><h1>Processing Purchase...</h1></ProgressDialog> }
             <div className="page-bg cartpage-bg"></div>
             <div className="cart-container-wrapper">
                 <div className="cart-container">
