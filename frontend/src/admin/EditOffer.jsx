@@ -1,9 +1,25 @@
 import { useRef, useState } from "react";
 import { fetchAddOffer, fetchEditOffer } from "../utils/http";
+
 import Quantity from "../childComponents/Quantity";
 import OfferDescription from "../childComponents/OfferDescription";
+import ProgressDialog from "../Dialogs/ProgressDialog";
+
+import { useMutation } from '@tanstack/react-query';
 
 export default function EditOffer({ offer, reloadOffers }) {
+
+    const addOfferMutation = useMutation({
+        mutationFn: fetchAddOffer,
+        onSuccess: reloadOffers
+    });
+    const editOfferMutation = useMutation({
+        mutationFn: fetchEditOffer,
+        onSuccess: reloadOffers
+    });
+    
+    
+
     const offerRef = useRef(null);
 
     const [ viewDescription, setViewDescription ] = useState(false);
@@ -24,25 +40,24 @@ export default function EditOffer({ offer, reloadOffers }) {
     async function handleChangeOffer(e) {
         e.preventDefault();
         if(!offer) {
-            await fetchAddOffer({ description: description, name: title, price: price, quantity: maxQuantity.current.value, type: type, url: imgUrl }) &&
-                await reloadOffers();
+            addOfferMutation.mutate({ description: description, name: title, price: price, quantity: maxQuantity.current.value, type: type, url: imgUrl });
         } else {
             const changes = {};
 
             if(description && offer.description !== description) changes.description = description;
             if(title && offer.name !== title) changes.name = title;
             if(price && offer.price !== price) changes.price = price;
-            if(maxQuantity.current.value && offer.quantity !== maxQuantity.current.value) changes.quantity = maxQuantity.current.value;
+            if(maxQuantity.current.value && offer.quantity + '' !== maxQuantity.current.value) changes.quantity = maxQuantity.current.value * 1;
             if(type && offer.type !== type) changes.type = type;
             if(imgUrl !== 'https://cdn.pixabay.com/photo/2013/07/12/17/20/leaf-152047_1280.png' && offer.url !== imgUrl) changes.url = imgUrl;
-            
-            await fetchEditOffer(offer._id, changes) &&
-                await reloadOffers();
+
+            editOfferMutation.mutate({ offerId: offer._id, offerChanges: changes });
         }
     }
 
     return (
         <>
+            { (addOfferMutation.isPending || editOfferMutation.isPending) && <ProgressDialog><h1>Loading...</h1></ProgressDialog> }
             <form className="offer preview-offer" onSubmit={handleChangeOffer} ref={offerRef}>
                 <input className="offer-edit-img-url" onChange={(e) => setImgUrl(e.target.value)} required placeholder="image url" defaultValue={offer?.url}></input>
                 <br/>
