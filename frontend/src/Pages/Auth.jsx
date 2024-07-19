@@ -2,10 +2,20 @@ import { useEffect, useState } from "react";
 import { fetchAuth } from "../utils/http";
 import { useOutletContext, useNavigate } from "react-router-dom";
 
+import { useMutation } from '@tanstack/react-query';
+
 export default function Auth() {
     const [ registered, setRegistered ] = useState(true);
     const { changeNavBar } = useOutletContext();
     const navigate = useNavigate();
+
+    const { mutate } = useMutation({
+        mutationFn: fetchAuth,
+        onSuccess: () => {
+            changeNavBar({ mode: 'REPLACE', key: registered ? 'Login' : 'Register', newKey: localStorage.getItem('username'), newValue: '/account'});
+            navigate('/account');
+        }
+    });
 
     useEffect(() => {
         localStorage.getItem('accessToken') && navigate('/account');
@@ -21,12 +31,7 @@ export default function Auth() {
             alert('Passwords differ!');
             return;
         }
-
-        const res = await fetchAuth(fd.get('username'), fd.get('password'), registered ? 'login' : 'register');
-        if(res.data) {
-            changeNavBar({ mode: 'REPLACE', key: registered ? 'Login' : 'Register', newKey: fd.get('username'), newValue: '/account'});
-            navigate('/account');
-        }
+        mutate({ username: fd.get('username'), password: fd.get('password'), method: registered ? 'login' : 'register' });
     }
 
     function handleSwitchAuth() {
