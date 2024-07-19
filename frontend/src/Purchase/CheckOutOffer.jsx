@@ -9,7 +9,7 @@ export default function CheckOutOffer({ offer }) {
     return (
         <div className="checkout-offer">
             <img src={offer?.url} className="checkout-offer-img" onClick={() => setImgFullView(true)}></img>
-            { imgFullView && <Modal unmount={() => setImgFullView(false)} loading={false}><img src={offer?.url}></img></Modal> }
+            { imgFullView && <Modal unmount={() => setImgFullView(false)} loading={false}><img className="full-view-img" src={offer?.url}></img></Modal> }
             <h1>{offer?.name}</h1>
             <div className="checkout-offer-info">
                 <div>
