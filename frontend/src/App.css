@@ -77,6 +77,7 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 1;
 }
 .credits-section a {
     text-decoration: none;
@@ -674,7 +675,6 @@ footer {
 .checkout-offer {
     margin: 15px;
     width: 75%;
-    height: 100px;
     background: rgb(6,208,1);
     background: linear-gradient(90deg, rgba(6,208,1,1) 0%, rgba(0,212,255,1) 50%, rgba(6,208,1,1) 100%);
     border-radius: 20px;
@@ -689,6 +689,10 @@ footer {
     object-fit: contain;
     cursor: pointer;
     user-select: none;
+    height: 100px;
+}
+.full-view-img {
+    max-height: 95vh;
 }
 .checkout-offer-info {
     border-left: solid black 1px;
@@ -696,7 +700,6 @@ footer {
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: space-around;
     color: var(--checkout-offer-info-txt);
 }
