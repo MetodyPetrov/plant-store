@@ -27,8 +27,11 @@ router.put('/credit', async (req, res) => {
 
 router.post('/offers/create', async (req, res) => {
     try {
+        const collection = await getCollection('offers');
         validateOfferInfo(req.body, 'full');
-        const result = await collection.insertOne(offer);
+        req.body.quantity = new Int32(req.body.quantity);
+
+        const result = await collection.insertOne(req.body);
         if(result.insertedId) res.status(201).json({ message: 'Offer successfully created!', offerId: result.insertedId });
     } catch(err) {
         console.error(err.message);
