@@ -1,3 +1,4 @@
+const { Int32 } = require('mongodb');
 const { getCollection } = require('./utils');
 
 async function validateOfferInfo(offerInfo, mode) {
