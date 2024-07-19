@@ -35,7 +35,7 @@ export async function fetchAddOffer(offer) {
     else return true;
 }
 
-export async function fetchEditOffer(offerId, offerChanges) {
+export async function fetchEditOffer({ offerId, offerChanges }) {
     if(offerChanges.url) {
         const isValidImage = await isValidImageUrl(offerChanges.url);
         if(!isValidImage) {
@@ -60,7 +60,7 @@ export async function fetchEditOffer(offerId, offerChanges) {
     else return true;
 }
 
-export async function fetchOfferQuantityChange(offerId, quantity = 1, mode) {
+export async function fetchOfferQuantityChange({ offerId, quantity = 1, mode }) {
     const response = await fetch(`http://localhost:3000/admin/offers/${offerId}/${mode}-quantity`, {
         method: 'PUT',
         headers: {
@@ -79,7 +79,7 @@ export async function fetchOfferQuantityChange(offerId, quantity = 1, mode) {
     else return true;
 }
 
-export async function fetchAuth(username, password, method) {
+export async function fetchAuth({ username, password, method }) {
     const response = await fetch(`http://localhost:3000/accounts/${method}`, {
         method: 'POST',
         headers: {
@@ -104,7 +104,7 @@ export async function fetchAuth(username, password, method) {
     }
 }
 
-export async function fetchGenerateCredit(credit) {
+export async function fetchGenerateCredit({ credit }) {
     const response = await fetch('http://localhost:3000/admin/credit', {
         method: 'PUT',
         headers: {
@@ -134,7 +134,7 @@ export async function fetchPurchaseHistory() {
     }
 }
 
-export async function fetchCartCheckout(cart) {
+export async function fetchCartCheckout({ cart }) {
     if(!localStorage.getItem('accessToken')) return;
     const request = cart.map(prod => ({ id: prod._id, amount: prod.buyQuantity }));
 
