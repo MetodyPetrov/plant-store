@@ -20,7 +20,6 @@ export default function Store() {
     const [ typeSearch, setTypeSearch ] = useState(false);
 
     useEffect(() => {
-        console.log(data[0].name);
         setOffers(data);
     }, [data]);
 
