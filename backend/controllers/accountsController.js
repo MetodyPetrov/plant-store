@@ -17,12 +17,12 @@ router.post('/register', async (req, res) => {
                 username: req.body.username,
                 password: hashedPassword,
                 client: 'user',
-                credit: new Int32(200)
+                credit: new Int32(20000)
             };
             await collection.insertOne(account);
             
             const result = getAuthResults(account);
-            res.status(200).json({ message: 'Account Successfully created!', data: result, authorization: account.client, credit: 200 });
+            res.status(200).json({ message: 'Account Successfully created!', data: result, authorization: account.client, credit: 20000 });
         }
     } catch (err) {
         console.error(err);
