@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 
 import HomePage from './Pages/Home';
 import NavigationBar from './Navigation/NavigationBar';
@@ -13,6 +13,7 @@ import './App.css';
 import Account from './Pages/Account';
 import Cart from './Purchase/Cart';
 import Error from './Pages/Error';
+import { queryClient } from './utils/http';
 
 const router = createBrowserRouter([
   {
@@ -34,8 +35,6 @@ const router = createBrowserRouter([
     ]
   }
 ]);
-
-const queryClient = new QueryClient();
 
 export default function App() {
   return (
