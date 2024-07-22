@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
 
 import Quantity from "../childComponents/Quantity";
@@ -10,7 +10,7 @@ import AdminOptions from "../admin/AdminOptions";
 import EditOffer from "../admin/EditOffer";
 import Modal from "../Dialogs/Modal";
 
-export default function Offer({ offer, searchQuery, displayType = false, refetchOffers, adminOptions = true, ...props }) {
+export default function Offer({ offer, searchQuery, displayType = false, adminOptions = true, ...props }) {
     const { addItemToCart } = useContext(CartContext);
     const offerRef = useRef(null);
 
@@ -24,6 +24,12 @@ export default function Offer({ offer, searchQuery, displayType = false, refetch
     const [ offerPrice, setOfferPrice ] = useState(offer?.price);
     const [ offerType, setOfferType ] = useState(offer?.type);
 
+    useEffect(() => {
+        setOfferTitle(offer?.name);
+        setOfferPrice(offer?.price);
+        setOfferType(offer?.type);
+    }, [offer]);
+
     const { changeNavBar, checkNavBarPageExist } = useOutletContext();
     function handleAddProduct() {
         addItemToCart(offer, inputQuantity?.current?.value);
@@ -33,27 +39,38 @@ export default function Offer({ offer, searchQuery, displayType = false, refetch
     function handleRightClick(e) {
         if(localStorage.getItem('client') !== 'admin') return;
         e.preventDefault();
-        setViewAdminOptions(<AdminOptions offerId={offer._id} unmount={() => setViewAdminOptions(false)} pos={e} refetchOffers={refetchOffers}/>); 
+        setViewAdminOptions(<AdminOptions offerId={offer._id} unmount={() => setViewAdminOptions(false)} pos={e}/>); 
     }
 
     useEffect(() => {
-        function highlightSearch(searchString, attribute, stateChange) { 
+        function highlightSearch(searchString, attribute, stateChange, keepOldTranscript = false, oldTranscript) { 
             let newTranscript = [];
             for (let i = 0; i < attribute.length; i++) {
                 let part = '';
                 for (let j = 0; j < searchString.length && j + i < attribute.length; j++) {
                     part += attribute[j + i];
                 }
-                if(part.toLowerCase() === searchString.toLowerCase()) {
-                    i += searchString.length - 1;
+                if(part.toLowerCase().includes(searchString.toLowerCase())) {
                     newTranscript.push(<span className="highlighted" key={i}>{part}</span>);
+                    i += searchString.length - 1;
                 }
                 else newTranscript.push(attribute[i]);
             }
+            if(keepOldTranscript) {
+                for(let i = 0; i < attribute.length; i++) {
+                    if(React.isValidElement(oldTranscript[i])) {
+                        newTranscript[i] = oldTranscript[i];
+                        i += oldTranscript[i].props.children.length;
+                    }
+                }
+            } // FINISH LOGIC
             stateChange(newTranscript);
         }
         
-        searchQuery?.type && highlightSearch(searchQuery.type, offer?.type, setOfferType);
+        if(searchQuery?.type) {
+            const typeArray = searchQuery.type.split(',').map(type => type.trim());
+            typeArray.forEach(type => type && highlightSearch(type, offer?.type, setOfferType, typeArray.length > 1, offerType));
+        }
         searchQuery?.name && highlightSearch(searchQuery.name, offer?.name, setOfferTitle);
         searchQuery?.price && highlightSearch(searchQuery.price, offer?.price, setOfferPrice);
         
@@ -75,7 +92,7 @@ export default function Offer({ offer, searchQuery, displayType = false, refetch
                 { 
                     offerEdit && 
                     <Modal unmount={() => setOfferEdit(false)}>
-                        <EditOffer offer={offer} reloadOffers={refetchOffers}/>
+                        <EditOffer offer={offer}/>
                     </Modal> 
                 }
 
