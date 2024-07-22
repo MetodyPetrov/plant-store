@@ -1,4 +1,7 @@
+import { QueryClient } from "@tanstack/react-query";
 import { isValidImageUrl } from "./functions";
+
+export const queryClient = new QueryClient();
 
 export async function fetchOffers({ signal }) {
     const response = await fetch('http://localhost:3000/offers', { 
@@ -51,6 +54,22 @@ export async function fetchEditOffer({ offerId, offerChanges }) {
             'X-Authorization': localStorage.getItem('accessToken')
         },
         body: JSON.stringify(offerChanges)
+    });
+
+    const output = (await response.json()).message;
+    
+    alert(output);
+    if(!response.ok) throw new Error(output);
+    else return true;
+}
+
+export async function fetchDeleteOffer({ offerId }) {
+    const response = await fetch(`http://localhost:3000/admin/offers/${offerId}/delete`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Authorization': localStorage.getItem('accessToken')
+        }
     });
 
     const output = (await response.json()).message;
