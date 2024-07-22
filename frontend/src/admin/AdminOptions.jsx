@@ -1,15 +1,17 @@
 import { useEffect, useRef, useState } from "react";
-import { fetchOfferQuantityChange } from "../utils/http";
+import { fetchOfferQuantityChange, queryClient } from "../utils/http";
 
 import { useMutation } from '@tanstack/react-query';
 
-export default function AdminOptions({ offerId, unmount, pos, refetchOffers }) {
+export default function AdminOptions({ offerId, unmount, pos }) {
     const optionsRef = useRef();
     const [ isVisible, setIsVisible ] = useState(false);
 
     const { mutate, isError } = useMutation({
         mutationFn: fetchOfferQuantityChange,
-        onSuccess: refetchOffers
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ['offers']});
+        }
     });
 
     useEffect(() => {
