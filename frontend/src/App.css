@@ -284,6 +284,9 @@ footer {
     border-right: none;
     transition: 0.2s;
 }
+.offer-edit-img-url {
+    font-size: 30px;
+}
 .edit-offer-button {
     fill: white;
     position: absolute;
@@ -295,20 +298,52 @@ footer {
 .edit-offer-button:hover {
     fill: rgb(180, 180, 180);
 }
-.offer-edit-confirm-button {
+.offer-edit-action-button {
     border: solid blue 1px;
     font-size: 30px;
     padding: 5px;
     border-radius: 20px;
     transition: 0.5s;
 }
-.offer-edit-confirm-button:hover {
+.delete-button {
+    background-color: rgb(173, 0, 0);
+    color: white;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.delete-button:hover {
+    background-color: red;
+}
+.confirm-delete-offer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+}
+.confirm-delete-offer-button {
+    color: white;
+    background-color: var(--selected-page-menu-bg);
+    font-size: 40px;
+    border: solid red 1px;
+    padding: 10px;
+    transition: 0.5s;
+}
+.confirm-delete-offer-button:hover {
+    background-color: red;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-top: none;
+    border-bottom: none;
+    border-left: solid 5px var(--button-submit);
+    border-right: solid 5px var(--button-submit);
+    font-size: 50px;
+}
+.confirm-button:hover {
     border: solid red 1px;
     background-color: blue;
     color: white;
-}
-.offer-edit-img-url {
-    font-size: 30px;
 }
 .admin-plus-button:hover {
     background-color: green;
@@ -336,6 +371,64 @@ footer {
 .storepage-bg {
     background-color: var(--storepage-bg);
 }
+.price-range-box {
+    background-color: var(--cart-container-bg);
+    color: white;
+    border-radius: 10px;
+    padding: 30px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    position: relative;
+    width: 300px;
+    font-size: 30px;
+}
+.range-values {
+    background-color: var(--grey);
+    padding: 5px;
+    border-radius: 10px;
+    width: 90%;
+    text-align: center;
+}
+.range-slider {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 90%;
+    align-items: center;
+}
+.range-input {
+    position: absolute;
+    -webkit-appearance: none;
+    width: 90%;
+    border: 0px solid var(--cart-container-bg);
+    border-radius: 50%;
+}
+.range-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+    background: var(--about-bushes-bg);
+    margin-top: -6px;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+.range-input::-webkit-slider-runnable-track {
+    width: 300px;
+    height: 5px;
+    background: #ddd;
+    border: none;
+    border-radius: 3px;
+}
+.range-input:focus::-webkit-slider-runnable-track {
+    background-color: #ccc;
+}
 .search-bar-wrapper {
     position: relative;
     width: 100vw;
@@ -345,25 +438,19 @@ footer {
 }
 .search-bar {
     outline: none;
-    font-size: 35px;
+    font-size: 60px;
     padding: 25px;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
     border: none;
     width: 50%;
-    height: 110px;
 }
 .type-search {
-    position: absolute;
-    height: 110px;
     width: 10%;
-    right: 25%;
-    transform: translate(+100%);
     font-size: 25px;
     padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     background-color: bisque;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
