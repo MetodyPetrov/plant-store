@@ -1,28 +1,41 @@
 import { useRef, useState } from "react";
-import { fetchAddOffer, fetchEditOffer } from "../utils/http";
+import { fetchAddOffer, fetchEditOffer, fetchDeleteOffer, queryClient } from "../utils/http";
 
 import Quantity from "../childComponents/Quantity";
 import OfferDescription from "../childComponents/OfferDescription";
 import ProgressDialog from "../Dialogs/ProgressDialog";
+import Modal from "../Dialogs/Modal";
 
 import { useMutation } from '@tanstack/react-query';
 
-export default function EditOffer({ offer, reloadOffers }) {
-
+export default function EditOffer({ offer }) {
+    
     const addOfferMutation = useMutation({
         mutationFn: fetchAddOffer,
-        onSuccess: reloadOffers
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ['offers']});
+        }
     });
     const editOfferMutation = useMutation({
         mutationFn: fetchEditOffer,
-        onSuccess: reloadOffers
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ['offers']});
+        }
     });
+    const deleteOfferMutation = useMutation({
+        mutationFn: fetchDeleteOffer,
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ['offers']});
+        }
+    }); 
     
     
 
     const offerRef = useRef(null);
 
     const [ viewDescription, setViewDescription ] = useState(false);
+
+    const [ deleteMode, setDeleteMode ] = useState(false);
 
     const maxQuantity = useRef(null);
     const [ title, setTitle ] = useState(false);
@@ -38,10 +51,13 @@ export default function EditOffer({ offer, reloadOffers }) {
     }
 
     async function handleChangeOffer(e) {
-        e.preventDefault();
+        e.preventDefault && e.preventDefault();
         if(!offer) {
             addOfferMutation.mutate({ description: description, name: title, price: price, quantity: maxQuantity.current.value, type: type, url: imgUrl });
-        } else {
+        } else if(e === 'delete') {
+            deleteOfferMutation.mutate({ offerId: offer._id });
+        }
+        else {
             const changes = {};
 
             if(description && offer.description !== description) changes.description = description;
@@ -70,7 +86,18 @@ export default function EditOffer({ offer, reloadOffers }) {
                 <br/>
                 <p className="offer-type" contentEditable={true} suppressContentEditableWarning={true} onInput={(e) => setType(e.target.innerText)}>{offer?.type || 'Set Type'}</p>
                 <br/>
-                <button className="offer-edit-confirm-button"><span>CONFIRM</span></button>
+                {
+                    offer && <button type="button" className="offer-edit-action-button delete-button" onClick={() => setDeleteMode(true)}>DELETE</button>
+                }
+                {
+                    deleteMode && <Modal unmount={() => setDeleteMode(false)}>
+                        <div className="confirm-delete-offer">
+                            <h1>Are you sure you want to delete this offer?</h1>
+                            <button type="button" className="confirm-delete-offer-button" onClick={() => handleChangeOffer('delete')}>YES</button>
+                        </div>
+                    </Modal>
+                }
+                <button className="offer-edit-action-button confirm-button"><span>CONFIRM</span></button>
                 <div className="offer-info">
                     <h2 className="offer-price" contentEditable={true} suppressContentEditableWarning={true} spellCheck={false} onInput={(e) => setPrice(e.target.innerText)}>{offer?.price || '0.00 lv.'}</h2>
                     <Quantity quantity={offer?.quantity || 0} inpRef={maxQuantity} editMaxQuantity={true}/>
