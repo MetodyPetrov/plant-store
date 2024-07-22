@@ -28,7 +28,7 @@ router.put('/credit', async (req, res) => {
 router.post('/offers/create', async (req, res) => {
     try {
         const collection = await getCollection('offers');
-        validateOfferInfo(req.body, 'full');
+        await validateOfferInfo(req.body, 'full');
         req.body.quantity = new Int32(req.body.quantity);
 
         const result = await collection.insertOne(req.body);
@@ -65,6 +65,17 @@ router.put('/offers/:id/edit', async (req, res) => {
         res.status(500).json({ message: err.message || 'Failed to save changes' });
     }
 });
+router.delete('/offers/:id/delete', async (req, res) => {
+    try {
+        const collection = await getCollection('offers');
+        const result = await collection.deleteOne({ _id: new ObjectId(req.params.id) });
+        if(result.deletedCount) res.status(200).json({ message: 'Successful Deletion' });
+        else res.status(404).json({ message: 'Offer not found' });
+    } catch(err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
 
 router.put('/offers/:id/increase-quantity', async (req, res) => {
     try {
@@ -73,7 +84,7 @@ router.put('/offers/:id/increase-quantity', async (req, res) => {
             { _id: new ObjectId(req.params.id) },
             { $inc: { quantity: req.body.quantity * 1 } }
         );
-        if(result.modifiedCount) return res.status(200).json({ message: 'Successful increase' });
+        if(result.modifiedCount) res.status(200).json({ message: 'Successful increase' });
     } catch(err) {
         console.error(err);
         res.status(500).json({ message: 'Unsuccessful increase' });
