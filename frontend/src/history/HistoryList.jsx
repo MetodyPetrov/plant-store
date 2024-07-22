@@ -11,7 +11,7 @@ export default function HistoryList() {
         isPending ? 'Loading...' :
         <>
         {data.map((purchaseInfo, index) => (
-            <li key={index}><Purchase purchase={purchaseInfo} bundledTop={ purchaseInfo.date === data[index-1]?.date } bundledBottom={ purchaseInfo.date === data[index+1]?.date }/></li>
+            <li value={data.length - index} key={index}><Purchase purchase={purchaseInfo} bundledTop={ purchaseInfo.date === data[index-1]?.date } bundledBottom={ purchaseInfo.date === data[index+1]?.date }/></li>
         ))}
         </>
     )
