@@ -6,7 +6,7 @@ export default function SearchBar({ setTypeSearch, setDefaultSearch, searchMode,
             <PriceRange max={maxOfferPrice} onChange={priceChange}/>
             <input className="search-bar" placeholder="Search Product" onChange={(e) => setDefaultSearch(e.target.value)}></input>
             <div className="type-search">
-                <input type="search" className="type-input" onChange={(e) => setTypeSearch(e.target.value)}></input>
+                <input type="search" className="type-input" onChange={(e) => setTypeSearch(e.target.value)} spellCheck={false}></input>
                 <input type="radio" id="type" readOnly checked={searchMode === 'type'} onClick={() => setSearchMode((mode) => mode === 'default' ? 'type' : 'default')}></input> 
                 <label htmlFor="type">type</label>
             </div>
