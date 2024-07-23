@@ -43,7 +43,7 @@ export default function Offer({ offer, searchQuery, displayType = false, adminOp
     }
 
     useEffect(() => {
-        function highlightSearch(searchString, attribute, stateChange, keepOldTranscript = false, oldTranscript) { 
+        function highlightSearch(searchString, attribute, stateChange) { 
             let newTranscript = [];
             for (let i = 0; i < attribute.length; i++) {
                 let part = '';
@@ -56,20 +56,24 @@ export default function Offer({ offer, searchQuery, displayType = false, adminOp
                 }
                 else newTranscript.push(attribute[i]);
             }
-            if(keepOldTranscript) {
-                for(let i = 0; i < attribute.length; i++) {
-                    if(React.isValidElement(oldTranscript[i])) {
-                        newTranscript[i] = oldTranscript[i];
-                        i += oldTranscript[i].props.children.length;
-                    }
-                }
-            } // FINISH LOGIC
             stateChange(newTranscript);
         }
         
         if(searchQuery?.type) {
+            const typeChange = (newType) => {
+                setOfferType((oldType) => {
+                    const finalType = [];
+                    for(let i = 0; i < offer?.type.length; i++) {
+                        const highlight = React.isValidElement(newType[i]) ? newType[i] : (React.isValidElement(oldType[i]) && oldType[i]);
+                        finalType.push(highlight || offer?.type[i]);
+                        i += highlight ? highlight.props.children.length - 1 : 0;
+                    }
+                    return finalType;
+                }); 
+            } // when something's written after ',' a newType is being defined, oldType is still taken into account and so if there's any highlights in either of them, they're kept
+
             const typeArray = searchQuery.type.split(',').map(type => type.trim());
-            typeArray.forEach(type => type && highlightSearch(type, offer?.type, setOfferType, typeArray.length > 1, offerType));
+            typeArray.forEach(type => type && highlightSearch(type, offer?.type, typeChange));
         }
         searchQuery?.name && highlightSearch(searchQuery.name, offer?.name, setOfferTitle);
         searchQuery?.price && highlightSearch(searchQuery.price, offer?.price, setOfferPrice);
@@ -80,6 +84,7 @@ export default function Offer({ offer, searchQuery, displayType = false, adminOp
             setOfferType(offer?.type);
         };
         
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchQuery, offer.name, offer.price, offer.type]);
 
     return (
