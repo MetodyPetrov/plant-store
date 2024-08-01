@@ -101,7 +101,7 @@ export default function Offer({ offer, searchQuery, displayType = false, adminOp
                     </Modal> 
                 }
 
-                <Link to={`/store/${offer?._id}`}><img src={offer?.url} alt={offer?.name} className="offer-img" onContextMenu={adminOptions ? handleRightClick : undefined}></img></Link>
+                <Link to={offer?._id}><img src={offer?.url} alt={offer?.name} className="offer-img" onContextMenu={adminOptions ? handleRightClick : undefined}></img></Link>
                 <br/>
                 <h1 className="offer-title" onClick={(e) => setViewDescription(e)}>{offerTitle || 'Unset Title'}</h1>
 
